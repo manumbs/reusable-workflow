@@ -1,0 +1,37 @@
+name: CD - Infra
+
+on: 
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+      url:
+        required: true
+        type: string
+
+jobs:
+  cd_infra_validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: echo This is CD Infra validate!
+      
+      - run: echo ${{ inputs.username }}
+      
+  cd_infra:
+    runs-on: ubuntu-latest
+    environment:
+      name: prd
+      url: ${{ steps.get-envs.outputs.ENVIRONMENT_URL }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: echo This is CD Infra!
+      
+      - run: echo ${{ inputs.username }}
+      
+      - run: echo '::set-output name=ENVIRONMENT_URL::https://google.com'
+        id: get-envs
