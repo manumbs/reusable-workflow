@@ -6,9 +6,6 @@ on:
       username:
         required: true
         type: string
-      url:
-        required: true
-        type: string
 
 jobs:
   cd_infra_validate:
