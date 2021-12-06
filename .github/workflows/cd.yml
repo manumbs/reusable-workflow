@@ -6,14 +6,25 @@ on:
       username:
         required: true
         type: string
-
+      environment:
+        required: true
+        type: string
+        
 jobs:
-  ci:
+  cd:
+    name: CD
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: Wait for Infra to succeed
+        uses: lewagon/wait-on-check-action@v1.0.0
+        with:
+          allowed-conclusions: success,skipped
+          check-name: CD - Infra - ${{ inputs.environment }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.sha }}
+          running-workflow-name: cd_hml
+          wait-interval: 10
       - run: echo This is CD!
-      
       - run: echo ${{ inputs.username }}
