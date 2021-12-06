@@ -12,7 +12,7 @@ on:
         
 jobs:
   cd:
-    name: CD
+    name: App
     runs-on: ubuntu-latest
 
     steps:
