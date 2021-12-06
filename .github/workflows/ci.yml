@@ -1,0 +1,19 @@
+name: CI
+
+on: 
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: echo This is CI!
+      
+      - run: echo ${{ inputs.username }}
