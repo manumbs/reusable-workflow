@@ -21,12 +21,12 @@ jobs:
           normalized_environment=$(echo ${{ inputs.environment }} | awk '{ print toupper($0) }')
           echo "::set-output name=NORMALIZED_ENVIRONMENT::$normalized_environment)"
         id: normalized-environment
-      - run: echo "${{ steps.normalized-environment.NORMALIZED_ENVIRONMENT }}"
+      - run: echo "${{ steps.normalized-environment.outputs.NORMALIZED_ENVIRONMENT }}"
       - name: Wait for Infra to succeed
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
           allowed-conclusions: success,skipped
-          check-name: CD - Infra - ${{ steps.normalized-environment.NORMALIZED_ENVIRONMENT }} / Infra
+          check-name: CD - Infra - ${{ steps.normalized-environment.outputs.NORMALIZED_ENVIRONMENT }} / Infra
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ github.sha }}
           running-workflow-name: cd_hml
