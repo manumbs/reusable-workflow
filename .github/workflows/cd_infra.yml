@@ -43,7 +43,7 @@ jobs:
     name: Infra
     runs-on: ubuntu-latest
     needs: cd_infra_validation
-    if: job.cd_infra_validation.steps.changes.outputs.src == 'true'
+    if: needs.cd_infra_validation.steps.changes.outputs.src == 'true'
     environment:
       name: prd
       url: ${{ steps.get-envs.outputs.ENVIRONMENT_URL }}
