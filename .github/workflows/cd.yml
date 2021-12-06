@@ -21,6 +21,7 @@ jobs:
           normalized_environment=$(echo ${{ inputs.environment }} | awk '{ print toupper($0) }')
           echo "::set-output name=NORMALIZED_ENVIRONMENT::$normalized_environment)"
         id: normalized-environment
+      - run: echo "${{ steps.normalized-environment.NORMALIZED_ENVIRONMENT }}"
       - name: Wait for Infra to succeed
         uses: lewagon/wait-on-check-action@v1.0.0
         with:
