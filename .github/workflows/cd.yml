@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: echo '::set-output name=NORMALIZED_ENVIRONMENT::$(echo ${{ inputs.environment.uppercase }}| awk '{ print toupper($0) }' )'
+      - run: echo '::set-output name=NORMALIZED_ENVIRONMENT::$(echo ${{ inputs.environment }} | awk '{ print toupper($0) }' )'
         id: normalize-environment
       - name: Wait for Infra to succeed
         uses: lewagon/wait-on-check-action@v1.0.0
