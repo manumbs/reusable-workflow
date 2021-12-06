@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           normalized_environment=$(echo ${{ inputs.environment }} | awk '{ print toupper($0) }')
-          echo "::set-output name=NORMALIZED_ENVIRONMENT::$normalized_environment)"
+          echo "::set-output name=NORMALIZED_ENVIRONMENT::$normalized_environment"
         id: normalized-environment
       - run: echo "${{ steps.normalized-environment.outputs.NORMALIZED_ENVIRONMENT }}"
       - name: Wait for Infra to succeed
