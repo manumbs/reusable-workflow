@@ -23,6 +23,7 @@ jobs:
       
   cd_infra:
     runs-on: ubuntu-latest
+    needs: cd_infra_validate
     environment:
       name: prd
       url: ${{ steps.get-envs.outputs.ENVIRONMENT_URL }}
