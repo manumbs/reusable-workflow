@@ -6,11 +6,18 @@ on:
       username:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
 
 jobs:
-  cd_infra_validate:
+  cd_infra:
+    name: Infra
     runs-on: ubuntu-latest
-
+    environment:
+      name: prd
+      url: ${{ steps.get-envs.outputs.ENVIRONMENT_URL }}
+      
     steps:
       - uses: actions/checkout@v2
 
@@ -18,18 +25,21 @@ jobs:
       
       - run: echo ${{ inputs.username }}
       
-  cd_infra:
-    runs-on: ubuntu-latest
-    needs: cd_infra_validate
-    environment:
-      name: prd
-      url: ${{ steps.get-envs.outputs.ENVIRONMENT_URL }}
-    steps:
-      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          base: ${{ github.ref }}
+          filters: |
+            src:
+              - kube/${{ inputs.environment }}/infra.yaml
+      
+      - run: |
+          sleep 20
+          echo Infra changes!
+        if: steps.changes.outputs.src == 'true'
 
-      - run: echo This is CD Infra!
-      
-      - run: echo ${{ inputs.username }}
-      
       - run: echo '::set-output name=ENVIRONMENT_URL::https://google.com'
+        if: always()
         id: get-envs
+    
+
